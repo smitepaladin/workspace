@@ -26,9 +26,9 @@ switch(num2 % 5){
 // 삼항연산자 ** 매우 중요 **
 // 디자인에서도 사용 가능하며, 앱에서 데이터를 받아올 때 다 받아왔을 경우, 못 받아왔을 경우를 생각하여 두가지를 모두 준비해야한다. 그 때 사용한다.
 
-bool isPublic = false;
-var vis = isPublic ? "True" : "False"; // 기본 true
-print(vis);
+// bool isPublic = false;
+// var vis = isPublic ? "True" : "False"; // 기본 true
+// print(vis);
 
 }
 
