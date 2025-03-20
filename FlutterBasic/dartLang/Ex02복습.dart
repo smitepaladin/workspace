@@ -3,19 +3,18 @@
 // 결과
 // Sum of 12345678 = 36
 
+
 main(){
-  int inputValue = 12345678;
-  int value = inputValue;
+  int num = 12345678;
+  int numOne = num;
   int remainder = 0;
   int sum = 0;
 
-  while(value !=0){
-    remainder = value % 10;
+  while(numOne != 0){
+    remainder = numOne % 10;
     sum += remainder;
-    value = value ~/ 10;
+    numOne = numOne ~/ 10;
   }
 
-  print("Sum of $inputValue = $sum");
-  
-
+  print("Sum of $num = $sum");
 }
