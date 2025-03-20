@@ -73,7 +73,7 @@ main(){
   }
   for(int i=(score.length-1); i>=0; i--){
     String scoreLength = "";
-    for(int j =1; j <= histo[i]; j++){
+    for(int j =1; j < histo[i]; j++){
       scoreLength += "#";
     }
     print("${i*10} : $scoreLength");
