@@ -13,8 +13,7 @@ main(){
   while(numOne != 0){
     remainder = numOne % 10;
     sum += remainder;
-    numOne = numOne ~/ 10;
+    numOne = numOne ~/10;
   }
-
   print("Sum of $num = $sum");
 }

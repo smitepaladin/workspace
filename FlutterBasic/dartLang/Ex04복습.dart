@@ -18,20 +18,21 @@
 
 main(){
   List<int> score = [34, 32, 55, 57, 59, 53, 90, 88, 88, 12];
-  var histo = List<int>.filled(10,0);
-
+  var histo = List<int>.filled(10, 0);
 
   for(int i = 0; i < score.length; i++){
-    histo[score[i] ~/10]++;
+    histo[score[i] ~/ 10]++;
   }
 
+  
   for(int i = (score.length - 1); i >= 0; i--){
     String scoreLength = "";
-    for(int j=1;j <= histo[i]; j++){
+    for(int j = 0; j<histo[i];j++){
       scoreLength += "#";
     }
-
     print("${i*10} : $scoreLength");
   }
+  
+
 
 }
