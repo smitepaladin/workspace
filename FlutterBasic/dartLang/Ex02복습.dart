@@ -5,15 +5,16 @@
 
 
 main(){
-  int num = 12345678;
-  int numOne = num;
-  int remainder = 0;
-  int sum = 0;
+int num = 12345678;
+int numOne = num;
+int remainder = 0;
+int sum = 0;
 
-  while(numOne != 0){
-    remainder = numOne % 10;
-    sum += remainder;
-    numOne = numOne ~/10;
-  }
+while(numOne != 0){
+  remainder = numOne % 10;
+  sum += remainder;
+  numOne = numOne ~/10;
+}
+
   print("Sum of $num = $sum");
 }

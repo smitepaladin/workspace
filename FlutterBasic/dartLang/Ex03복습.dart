@@ -9,8 +9,8 @@ main(){
   List<int> num = [11,12,11,15,12];
 
   int maxValue = num[0];
-  int loopCount = 0;
   int maxIndex = 0;
+  int loopCount = 0;
 
   for(int i in num){
     loopCount++;
@@ -20,5 +20,6 @@ main(){
     }
   }
   print("숫자들 중 최댓값은 $maxValue이고 $maxIndex번째 값 입니다.");
+
 }
 
