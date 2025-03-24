@@ -38,6 +38,5 @@ class Gugudan{
       
       print(gugudan);
     }
-    return gugudan;
-  }
+      }
 }
