@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Fluttertoast.showToast(
+            Fluttertoast.showToast( // .찍고 액션을 줬다 = 팩토리 생성자
               msg: 'Toast Button is clicked.',
               gravity: ToastGravity.TOP,
               fontSize: 20,
