@@ -10,7 +10,7 @@ class SecondPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('screen 1st'),
+            Text('screen 2nd'),
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/2ndimage'),
               child: Text('SecondImagePage'),
