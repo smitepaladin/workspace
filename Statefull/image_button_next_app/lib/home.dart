@@ -64,13 +64,13 @@ class _HomeState extends State<Home> {
                   child: Image.asset(
                     'images/${imageFiles[currentPage]}',
                     fit: BoxFit.fill,
-                    width: 400,
+                    width: screenWidth,
                     height: 600,
                   ),
                 ),
                 Positioned(
                   left: screenWidth - 120,
-                  top: 10,
+                  top: screenHeight - 843,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
