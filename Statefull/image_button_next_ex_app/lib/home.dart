@@ -11,7 +11,6 @@ class _HomeState extends State<Home> {
   // Property
   late List<String> imageFiles;
   late int currentPage;
-  late int nextPage;
 
 
   @override
@@ -27,7 +26,6 @@ class _HomeState extends State<Home> {
     ];
 
   currentPage = 0;
-  nextPage = 1;
   }
 
 
@@ -87,10 +85,6 @@ class _HomeState extends State<Home> {
       currentPage = imageFiles.length -1;
     }
 
-    nextPage --;
-    if(nextPage < 0){
-      nextPage = imageFiles.length -1;
-    }
     setState(() {});
   }
 
@@ -100,10 +94,6 @@ class _HomeState extends State<Home> {
       currentPage = 0;
     }
 
-    nextPage ++;
-    if(nextPage >= imageFiles.length){
-      nextPage = 0;
-    }
 
   setState(() {});
   }
