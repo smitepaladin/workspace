@@ -96,82 +96,32 @@ class _HomeState extends State<Home> {
 
   onSwitch(){
     if(_lampImage == "images/lamp_on.png"){
-      _showOnWarning(context);
+      _showWarning(context);
     }else{
-      _showOn(context);
+      _show(context);
     }
 
     setState(() {});
   }
 
-  _showOnWarning(BuildContext context){
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-        return AlertDialog(
-          title: Text('경고'),
-          content: Text('현재 램프가 켜진 상태입니다.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(), // of(context) 를 통해서 바로 만든 context만 지우겠다
-              child: Text('네. 알겠습니다.'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
-  _showOn(BuildContext context){
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-        return AlertDialog(
-          title: Text('램프 켜기'),
-          content: Text('램프를 켜시겠습니까?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                _lampImage = "images/lamp_on.png";
-                setState(() {});
-                Navigator.of(context).pop();
-              },
-              child: Text('네'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(), // of(context) 를 통해서 바로 만든 context만 지우겠다
-              child: Text('아니오'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
-
-  offSwitch(){
+    offSwitch(){
     if(_lampImage == "images/lamp_off.png"){
-      _showOffWarning(context);
+      _showWarning(context);
     }else{
-      _showOff(context);
+      _show(context);
     }
 
     setState(() {});
   }
 
-
-    _showOffWarning(BuildContext context){
+  _showWarning(BuildContext context){
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context){
         return AlertDialog(
           title: Text('경고'),
-          content: Text('현재 램프가 꺼진 상태입니다.'),
+          content: Text('현재 램프가 ${(_lampImage == "images/lamp_on.png")?("켜진"):("꺼진")} 상태입니다.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(), // of(context) 를 통해서 바로 만든 context만 지우겠다
@@ -183,18 +133,19 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _showOff(BuildContext context){
+
+  _show(BuildContext context){
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context){
         return AlertDialog(
-          title: Text('램프 끄기'),
-          content: Text('램프를 끄시겠습니까?'),
+          title: Text('램프 ${(_lampImage == "images/lamp_on.png")?("끄기"):("켜기")}'),
+          content: Text('램프를 ${(_lampImage == "images/lamp_on.png")?("끄"):("켜")}시겠습니까?'),
           actions: [
             TextButton(
               onPressed: () {
-                _lampImage = "images/lamp_off.png";
+                _lampImage = (_lampImage == "images/lamp_on.png")?("images/lamp_off.png"):("images/lamp_on.png");
                 setState(() {});
                 Navigator.of(context).pop();
               },
@@ -209,5 +160,10 @@ class _HomeState extends State<Home> {
       },
     );
   }
+
+
+
+
+
 
 }//Class
