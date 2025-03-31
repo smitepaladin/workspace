@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
                   borderSide: BorderSide(color: Colors.blue),
                 )                 
               ),
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
             ),
             ElevatedButton(
               onPressed:() {
