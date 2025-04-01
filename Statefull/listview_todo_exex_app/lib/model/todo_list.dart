@@ -5,11 +5,5 @@ class TodoList {
   String workList; // 사용자 입력값, 할일
 
   // Constructer
-  TodoList(
-    {
-      required this.imagePath,
-      required this.workList
-    }
-  );
-
+  TodoList({required this.imagePath, required this.workList});
 }
