@@ -119,25 +119,6 @@ class _InsertListState extends State<InsertList> {
   }//build
   // -- functions --
 
-  // addViewSwitchOnOFF(){
-  //   if(Message.switchBuy == true){
-  //     Message.switchPromise = false;
-  //     Message.switchStudy = false;
-  //     Message.imagePath = 'images/cart.png';
-  //     setState(() {});
-  //   }else if(Message.switchPromise == true){
-  //     Message.switchBuy = false;
-  //     Message.switchStudy = false;
-  //     Message.imagePath = 'images/clock.png';
-  //     setState(() {});
-  //   }else if(Message.switchStudy == true){
-  //     Message.switchBuy = false;
-  //     Message.switchPromise = false;
-  //     Message.imagePath = 'images/pencil.png';
-  //     setState(() {});
-  //   }
-    
-  // }
 
   addViewSwitchBuy(){
     if(Message.switchBuy == true){
