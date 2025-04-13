@@ -11,7 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-
   //Property
   late TabController controller;
   late List<Animal> animal; // 제너릭은 모델인 Animal
@@ -33,7 +32,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       Colors.yellow,
       Colors.yellow,
       Colors.yellow,
-    ];    
+    ];
   }
 
   addData() {
@@ -120,17 +119,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      
+
       body: TabBarView(
         controller: controller,
         children: [
           FirstTab(list: animal), //first_tab과 연결
-          SecondTab(list: animal, borderColor: animalColor),
+          SecondTab(
+            list: animal,
+            borderColor: animalColor,
+          ), // second_tab과 연결, list와 borderColor는 매개변수이다.
         ],
       ),
       // bottomNavigationBar: Container(
       //   color: Colors.amber,
-      //   child: 
+      //   child:
       // ),
     );
   }

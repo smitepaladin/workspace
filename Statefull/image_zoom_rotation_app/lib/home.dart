@@ -9,15 +9,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // Property(즉 state)
-  late String _lampImage;        // Image File Name
-  late double _lampWidth;        // Image Width
-  late double _lampHeight;       // Image Height
-  late String _buttonName;       // Button title
-  late bool _switch;             // Switch on, off
-  late bool _lampSizeStatus;     // 현재 화면의 Lamp의 크기
-  late double _rotation;         // 회전 각도
+  late String _lampImage; // Image File Name
+  late double _lampWidth; // Image Width
+  late double _lampHeight; // Image Height
+  late String _buttonName; // Button title
+  late bool _switch; // Switch on, off
+  late bool _lampSizeStatus; // 현재 화면의 Lamp의 크기
+  late double _rotation; // 회전 각도
 
-@override
+  @override
   void initState() {
     super.initState();
     _lampImage = 'images/lamp_on.png';
@@ -32,11 +32,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'image확대 및 축소'
-        ),
-      ),
+      appBar: AppBar(title: Text('image확대 및 축소')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +45,8 @@ class _HomeState extends State<Home> {
                 children: [
                   RotationTransition(
                     turns: AlwaysStoppedAnimation(_rotation / 360),
-                    child: Image.asset( // sizedbox를 혼자 차지하고 있기 때문에 크기가 안 변한다. Collum으로 한번 더 감싸서 종속성을 풀어준다.
+                    child: Image.asset(
+                      // sizedbox를 혼자 차지하고 있기 때문에 크기가 안 변한다. Column으로 한번 더 감싸서 종속성을 풀어준다.
                       _lampImage,
                       width: _lampWidth,
                       height: _lampHeight,
@@ -69,12 +66,7 @@ class _HomeState extends State<Home> {
                 ),
                 Column(
                   children: [
-                    Text(
-                      '전구 스위치',
-                      style: TextStyle(
-                        fontSize: 10,
-                      ),
-                    ),
+                    Text('전구 스위치', style: TextStyle(fontSize: 10)),
                     Switch(
                       value: _switch,
                       onChanged: (value) {
@@ -83,10 +75,11 @@ class _HomeState extends State<Home> {
                       },
                     ),
                   ],
-                )
+                ),
               ],
             ),
-            SizedBox( // 슬라이더 크기 조절을 위해 만든 sizedbox
+            SizedBox(
+              // 슬라이더 크기 조절을 위해 만든 sizedbox
               width: 200,
               child: Slider(
                 min: 0,
@@ -102,29 +95,27 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }//build
-
+  } //build
 
   // -- functions --
 
-  decisionLampSize(){
-    if(_lampSizeStatus == true){
-      _lampWidth= 150;
-      _lampHeight= 300;
+  decisionLampSize() {
+    if (_lampSizeStatus == true) {
+      _lampWidth = 150;
+      _lampHeight = 300;
       _buttonName = "Image 확대";
       _lampSizeStatus = false;
-    }else{
+    } else {
       _lampWidth = 250;
-      _lampHeight= 500;
+      _lampHeight = 500;
       _buttonName = 'Image 축소';
       _lampSizeStatus = true;
     }
     setState(() {});
   }
 
-  decisionOnOff(){
+  decisionOnOff() {
     _lampImage = _switch ? 'images/lamp_on.png' : 'images/lamp_off.png';
     setState(() {});
   }
-
 }//Class

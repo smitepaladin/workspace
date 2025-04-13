@@ -32,6 +32,12 @@ class _HomeState extends State<Home> {
             onPressed: () {
 
               Get.to(Controller())!.then((Value) => getData());
+            // !는 절대 null값이 아니라는 표시
+            // then은 앞의 Future가 실행된 이후 나중에 실행될 것을 예약하는 문법
+            // 그래서 Controller에서 작업이 끝난 후 value를 받아와 getData에 전해주는 모양새가 된다.
+
+
+
               // Messege.lampStatus = true; // 눌렀을 때 램프 초기값 가지고 간다.
               // Messege.lampColor = true;
               // Navigator.push(

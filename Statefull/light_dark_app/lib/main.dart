@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         colorSchemeSeed: seedColor
       ),
-      home: Home(onChangeTheme: _changeThemeMode), // const 삭제
+      home: Home(onChangeTheme: _changeThemeMode), // const 삭제, onChangeTheme는 콜백함수명, _changeThemeMode는 펑션이름.
     );
   }
 }// Class

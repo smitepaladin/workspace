@@ -24,7 +24,9 @@ class _TableListState extends State<TableList> {
   addData() {
     todoList.add(TodoList(imagePath: 'images/cart.png', workList: '책구매'));
     todoList.add(TodoList(imagePath: 'images/clock.png', workList: '철수와 약속'));
-    todoList.add(TodoList(imagePath: 'images/pencil.png', workList: '스터디 준비하기'));
+    todoList.add(
+      TodoList(imagePath: 'images/pencil.png', workList: '스터디 준비하기'),
+    );
   }
 
   @override
@@ -38,7 +40,10 @@ class _TableListState extends State<TableList> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context,'/insert',).then((value) => rebuildData());
+              Navigator.pushNamed(
+                context,
+                '/insert',
+              ).then((value) => rebuildData());
             },
             icon: Icon(Icons.add_outlined),
           ),
@@ -49,7 +54,8 @@ class _TableListState extends State<TableList> {
         child: Center(
           child: ListView.builder(
             itemCount: todoList.length,
-            itemBuilder: (context, index) { // context는 메모리에 등록을 시켜준다. index번호만큼 만들어주기 때문에 알아서 for문 기능이 있다.
+            itemBuilder: (context, index) {
+              // context는 메모리에 등록을 시켜준다. index번호만큼 만들어주기 때문에 알아서 for문 기능이 있다.
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 key: ValueKey(todoList[index]),
@@ -57,15 +63,14 @@ class _TableListState extends State<TableList> {
                   todoList.remove(todoList[index]);
                   setState(() {});
                 },
+
                 background: Container(
                   color: Colors.red,
                   alignment: Alignment.centerRight,
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(
-                    Icons.delete_forever,
-                    size: 50,
-                  ),
+                  child: Icon(Icons.delete_forever, size: 50),
                 ),
+
                 child: GestureDetector(
                   onTap: () {
                     Message.imagePath = todoList[index].imagePath;
@@ -79,7 +84,9 @@ class _TableListState extends State<TableList> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(todoList[index].imagePath), // 모델을 통한 리스트 데이터 불로오는 양식
+                            child: Image.asset(
+                              todoList[index].imagePath,
+                            ), // 모델을 통한 리스트 데이터 불로오는 양식
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),

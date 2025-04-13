@@ -4,14 +4,17 @@ import 'package:listview_insert_builder_app/model/animal.dart';
 class SecondTab extends StatefulWidget {
   final List<Animal> list; // Home과 연결
   final List<Color> borderColor;
-  const SecondTab({super.key, required this.list, required this.borderColor});// Home과 연결
+  const SecondTab({
+    super.key,
+    required this.list,
+    required this.borderColor,
+  }); // Home과 연결
 
   @override
   State<SecondTab> createState() => _SecondTabState();
 }
 
 class _SecondTabState extends State<SecondTab> {
-
   late TextEditingController nameController; // 동물이름
   late int radioValue; // Radio Button
   late bool flyAble; // check Box
@@ -27,6 +30,7 @@ class _SecondTabState extends State<SecondTab> {
     imagePath = "";
     imageName = "";
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +39,7 @@ class _SecondTabState extends State<SecondTab> {
           children: [
             TextField(
               controller: nameController,
-              decoration: InputDecoration(
-                labelText: '동물이름을 입력하세요'
-              ),
+              decoration: InputDecoration(labelText: '동물이름을 입력하세요'),
               keyboardType: TextInputType.text,
               maxLines: 1, // 한줄이상 못쓴다.
             ),
@@ -67,7 +69,8 @@ class _SecondTabState extends State<SecondTab> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround, // 간격을 주변에 똑같게 맞춰준다.
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceAround, // 간격을 주변에 똑같게 맞춰준다.
               children: [
                 Text('날 수 있나요?'),
                 Checkbox(
@@ -95,16 +98,14 @@ class _SecondTabState extends State<SecondTab> {
                         border: Border.all(
                           color: widget.borderColor[index],
                           width: 2,
-                        )
+                        ),
                       ),
-                      child: Image.asset(
-                        widget.list[index].imagePath
-                      ),
+                      child: Image.asset(widget.list[index].imagePath),
                     ),
                   );
                 },
               ),
-            ),            
+            ),
             // SizedBox(
             //   height: 100,
             //   child: ListView(
@@ -116,10 +117,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "젖소";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/cow.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/cow.png', width: 80),
             //       ),
 
             //       GestureDetector(
@@ -128,10 +126,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "돼지";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/pig.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/pig.png', width: 80),
             //       ),
 
             //       GestureDetector(
@@ -140,10 +135,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "벌";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/bee.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/bee.png', width: 80),
             //       ),
 
             //       GestureDetector(
@@ -152,10 +144,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "여우";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/fox.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/fox.png', width: 80),
             //       ),
 
             //       GestureDetector(
@@ -164,10 +153,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "고양이";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/cat.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/cat.png', width: 80),
             //       ),
 
             //       GestureDetector(
@@ -176,10 +162,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "늑대";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/wolf.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/wolf.png', width: 80),
             //       ),
 
             //       GestureDetector(
@@ -188,10 +171,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "원숭이";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/monkey.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/monkey.png', width: 80),
             //       ),
             //       GestureDetector(
             //         onTap: () {
@@ -199,10 +179,7 @@ class _SecondTabState extends State<SecondTab> {
             //           imageName = "개";
             //           setState(() {});
             //         },
-            //         child: Image.asset(
-            //           'images/dog.png',
-            //           width: 80,
-            //         ),
+            //         child: Image.asset('images/dog.png', width: 80),
             //       ),
             //     ],
             //   ),
@@ -216,23 +193,23 @@ class _SecondTabState extends State<SecondTab> {
         ),
       ),
     );
-  }//build
+  } //build
 
   // == functions ==
 
-  radioChange(int? value){ // value값이 위에서 ? 상태여서 ? 로 받았다
+  radioChange(int? value) {
+    // value값이 위에서 ? 상태여서 ? 로 받았다
     radioValue = value!; // !는 ? 를 해제한다
     setState(() {});
   }
 
-
-  _showDialog(){
+  _showDialog() {
     var animal = Animal(
       imagePath: imagePath,
       animalName: nameController.text,
       order: getOrder(radioValue),
-      flyAble: flyAble);
-
+      flyAble: flyAble,
+    );
 
     showDialog(
       context: context,
@@ -240,16 +217,13 @@ class _SecondTabState extends State<SecondTab> {
         return AlertDialog(
           title: Text(
             '동물 추가하기',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           content: Text(
             '이 동물은 ${animal.animalName} 입니다. \n'
             '또 동물의 종류는 ${animal.order} 입니다. \n'
-            '이 동물은 ${animal.flyAble ? "날 수 있습니다":"날 수 없습니다"} \n'
-            '이 동물을 추가 하시겠습니까?'
+            '이 동물은 ${animal.flyAble ? "날 수 있습니다" : "날 수 없습니다"} \n'
+            '이 동물을 추가 하시겠습니까?',
           ),
           actions: [
             TextButton(
@@ -271,27 +245,26 @@ class _SecondTabState extends State<SecondTab> {
     );
   }
 
-    String getOrder(int radioValue){
-      String returnValue = "";
-      switch(radioValue){
-        case 0:
-          returnValue = "양서류";
-        case 1:
-          returnValue = "파충류";
-        case 2:
-          returnValue = "포유류";
-      }
-      return returnValue;
+  String getOrder(int radioValue) {
+    String returnValue = "";
+    switch (radioValue) {
+      case 0:
+        returnValue = "양서류";
+      case 1:
+        returnValue = "파충류";
+      case 2:
+        returnValue = "포유류";
     }
-
-
-    rebuildBorder(int index){
-    for (int i=0; i<widget.list.length; i++){
-      widget.borderColor[i] = Colors.black;
-    }
-    widget.borderColor[index] = Colors.redAccent;
-    setState(() {});
+    return returnValue;
   }
 
-
+  rebuildBorder(int index) {
+    for (int i = 0; i < widget.list.length; i++) {
+      widget.borderColor[i] = Colors.yellow;
+    }
+    widget.borderColor[index] = Colors.redAccent;
+    imageName = widget.list[index].animalName;
+    imagePath = widget.list[index].imagePath;
+    setState(() {});
+  }
 }//Class
