@@ -3,7 +3,6 @@ import 'package:navigator_tabbar_ex_app/view/first_tab.dart';
 import 'package:navigator_tabbar_ex_app/view/second_tab.dart';
 import 'package:navigator_tabbar_ex_app/model/animal.dart';
 
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -12,7 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-
   //Property
   late TabController controller;
   late List<Animal> animal; // 제너릭은 모델인 Animal
@@ -23,6 +21,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     controller = TabController(length: 2, vsync: this);
     animal = [];
     addData();
+  }
+
+  @override
+  void dispose() {
+    controller
+        .dispose(); // 앱이 종료될 때 메모리에 있는 컨트롤러도 죽여라. super.dispose();보다 위에 있어야한다.
+    super.dispose();
   }
 
   addData() {

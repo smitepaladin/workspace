@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
   final Function(ThemeMode) onChangeTheme; // 앱이 시작할 때 함수를 가져온다.
-  const Home({super.key, required this.onChangeTheme}); // final r생성자로 받아온다.
+  const Home({super.key, required this.onChangeTheme}); // final 생성자로 받아온다.
 
   @override
   State<Home> createState() => _HomeState();
