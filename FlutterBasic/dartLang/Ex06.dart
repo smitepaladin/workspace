@@ -1,7 +1,6 @@
 // BMI 계산하기
 // 신장이 170cm이고 몸무게가 70kg인 경우의 BMI 계산하기
 
-import 'dart:math';
 // main(){
   
 //   double height = 170;
