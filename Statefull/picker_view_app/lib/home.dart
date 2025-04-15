@@ -12,7 +12,7 @@ class _HomeState extends State<Home> {
 
   //Property
 
-  late List imageName;
+  late List<String> imageName;
   late int selectedItem;
 
 
