@@ -57,8 +57,8 @@ class _HomeState extends State<Home> {
                 itemExtent: 50, // 바 크기
                 scrollController: FixedExtentScrollController(initialItem: 0),
                 onSelectedItemChanged: (value) {
-                  _insertLines(selectedItem);
                   selectedItem = value; // 선택한 번호가 selectedItem으로 들어간다.
+                  _insertLines(selectedItem);
                   setState(() {});
                 },
                 children: List.generate(
@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-	          Padding(
+              Padding(
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: SizedBox(
                 width: 200,
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
     _guguDan.text = "";
     for (int i = 1; i<=9; i++){
       _guguDan.text +=
-        "${_dan[selectedItem+1]} X $i = ${(_dan[selectedItem+1] * i).toString()} \n";
+        "${_dan[selectedItem]} X $i = ${(_dan[selectedItem] * i).toString()} \n";
     }
     setState(() {});
   }

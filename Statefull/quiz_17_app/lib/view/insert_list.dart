@@ -65,7 +65,7 @@ class _InsertListState extends State<InsertList> {
                   )
                 ),
               ),
-            ),              
+            ),
               ],
             ),
               TextField(
