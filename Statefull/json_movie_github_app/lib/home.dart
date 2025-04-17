@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
     var response = await http.get(url); // http를 이용해서 가져온다.
     // print(response.body); // 데이터 가져온것 확인
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes)); // decode가 중괄호를 벗겨주고 result부터 받아온다.
-    List result = dataConvertedJSON['results']; // Map형식이 되었다.
+    List result = dataConvertedJSON['results']; // Map형식이 된 dataConvertedJSON을 results란 키값으로 리스트로 만들어 리스트에 넣어준다.
     // print(result);
     data.addAll(result); // 리스트 전체에 확 넣어준다.
     setState(() {}); // 늦게 가져왔을 수도 있으니 화면에 반영해주기
