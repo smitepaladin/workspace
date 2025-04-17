@@ -30,7 +30,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('WebBiew - Tabbar')),
+      appBar: AppBar(title: Text('WebView - Tabbar')),
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(), // 좌우 Gesture 금지
         controller: controller,

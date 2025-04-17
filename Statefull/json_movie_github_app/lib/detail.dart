@@ -35,6 +35,7 @@ class _DetailState extends State<Detail> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network(
               image

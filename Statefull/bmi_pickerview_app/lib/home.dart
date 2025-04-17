@@ -13,8 +13,10 @@ class _HomeState extends State<Home> {
   // Property
   // late int selectedHeight;
   // late int selectedWeight;
-  late List<int> selectedHeight;
-  late List<int> selectedWeight;
+  late List<int> heightList;
+  late int selectedHeight;
+  late List<int> weightList;
+  late int selectedWeight;
   late String firstLine;
   late String imageName;
 
@@ -23,8 +25,10 @@ class _HomeState extends State<Home> {
     super.initState();
     // selectedHeight = 160;
     // selectedWeight = 60;
-    selectedHeight = List.generate(101, (index) => index + 100);
-    selectedWeight = List.generate(171, (index) => index + 30);
+    heightList = List.generate(101, (index) => index + 100);
+    selectedHeight = 0;
+    weightList = List.generate(171, (index) => index + 30);
+    selectedWeight = 0;
     imageName = "risk";
     firstLine = "귀하의 bmi지수는 23.4이고 과체중입니다.";
   }
