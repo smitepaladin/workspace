@@ -17,7 +17,8 @@ class _HomeState extends State<Home> {
   //Property
   late List data;
   late TextEditingController textEditingController;
-
+  late int page;
+  late ScrollController scrollController;
   
 
 
@@ -26,10 +27,17 @@ class _HomeState extends State<Home> {
     super.initState();
     data = [];
     textEditingController = TextEditingController();
+    page = 1;
+    scrollController = ScrollController();
 
 
-
-
+    scrollController.addListener((){
+     // 리스트의 마지막일 경우
+      if(scrollController.offset >= scrollController.position.maxScrollExtent && !scrollController.position.outOfRange){
+        page++;
+        getJSONData();
+      }
+  });
 
 
 
@@ -64,6 +72,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               if(textEditingController.text.trim().isNotEmpty){
               data.clear();
+              page = 1;
               getJSONData();  
               }else{
                 errorSnackBar();
@@ -77,6 +86,7 @@ class _HomeState extends State<Home> {
       ),
       body: GridView.builder(
         itemCount: data.length,
+        controller: scrollController,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 10, // 한줄 당 cell끼리의 간격
@@ -119,13 +129,13 @@ class _HomeState extends State<Home> {
 
 
     getJSONData()async{
-    var url = Uri.parse('https://pixabay.com/api/?key=49770210-ba2802d9fb2b21437ff8ed796&q=${textEditingController.text}&image_type=photo');
+    var url = Uri.parse('https://pixabay.com/api/?key=49770210-ba2802d9fb2b21437ff8ed796&q=${textEditingController.text}&image_type=photo&page=$page');
     var response = await http.get(url);
     // print(response.body); // --1
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
     // print(dataConvertedJSON);
     List result = dataConvertedJSON['hits'];
-    data.clear();
+    // data.clear();
     for(int i=0; i < result.length; i++){
       data.add(result[i]['webformatURL']);
     }
