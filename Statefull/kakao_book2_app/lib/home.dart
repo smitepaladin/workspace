@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.all(30.0),
                     child: 
                     data[index]['thumbnail'].isEmpty
-                    ? Text('이미지가 없습니다.')
+                    ? Text('이미지가 \n없습니다.')
                     : 
                     Image.network(
                       data[index]['thumbnail'],
