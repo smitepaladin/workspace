@@ -16,7 +16,7 @@ class DatabaseHandler {
     );
   }
 
-  Future<List<Students>> quewryStudents() async{
+  Future<List<Students>> queryStudents() async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery('select * from students');
     return queryResults.map((e) => Students.fromMap(e)).toList();

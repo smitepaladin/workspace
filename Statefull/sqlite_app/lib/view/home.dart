@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: FutureBuilder(
-        future: handler.quewryStudents(), 
+        future: handler.queryStudents(), 
         builder: (context, snapshot) {
           if(snapshot.hasData){
             return ListView.builder(
@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
   } // build
 
   reloadData(){
-    handler.quewryStudents();
+    handler.queryStudents();
     setState(() {});
   }
 } // class
