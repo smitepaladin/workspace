@@ -48,15 +48,14 @@ class _HomeState extends State<Home> {
 
   // functions //
 
-
-  errorSnackBar(){
-      Get.snackbar(
+  errorSnackBar() {
+    Get.snackbar(
       '경고',
       '입력을 확인하세요',
       snackPosition: SnackPosition.TOP,
       colorText: Theme.of(context).colorScheme.onTertiary,
       backgroundColor: Theme.of(context).colorScheme.tertiary,
-    ); 
+    );
   }
 
   showSnackBar() {
