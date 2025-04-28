@@ -85,10 +85,10 @@ class _InsertStudentsState extends State<InsertStudents> {
   // --- Functions ---
   insertAction() async{
     Students students = Students(
-      code: codeController.text, 
-      name: nameController.text, 
-      dept: deptController.text, 
-      phone: phoneController.text);
+          code: codeController.text, 
+          name: nameController.text, 
+          dept: deptController.text, 
+          phone: phoneController.text);
       int result = await handler.insertStudents(students);
       if(result == 0){
         errorSnackBar();
