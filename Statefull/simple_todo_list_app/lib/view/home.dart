@@ -34,7 +34,6 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             onPressed: () {
-              id = null;
               worklistController.clear();              
               showInsertDialog();
               reloadData();

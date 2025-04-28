@@ -93,10 +93,10 @@ class _UpdateStudentsState extends State<UpdateStudents> {
   // --- Functions ---
   updateAction() async{
     Students students = Students(
-      code: codeController.text, 
-      name: nameController.text, 
-      dept: deptController.text, 
-      phone: phoneController.text);
+          code: codeController.text, 
+          name: nameController.text, 
+          dept: deptController.text, 
+          phone: phoneController.text);
       int result = await handler.updateStudents(students);
       if(result == 0){
         errorSnackBar();

@@ -10,7 +10,7 @@ class DatabaseHandler {
       onCreate: (db, version) async{
         await db.execute(
           "create table students (id integer primary key autoincrement, code text, name text, dept text, phone text)"
-        );
+        ); // await이후로 table을 더 만들수 있다.
       },
       version: 1
     );
