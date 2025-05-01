@@ -90,20 +90,37 @@ class _GpsEatplaceState extends State<GpsEatplace> {
     ];
 
     // 사용자 위치 마커 추가
-    if (userLocation != null) {
-      markers.add(
-        Marker(
-          point: userLocation!,
-          width: 40,
-          height: 40,
-          child: const Icon(
+if (userLocation != null) {
+  markers.add(
+    Marker(
+      point: userLocation!,
+      width: 100,
+      height: 100,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: const Text(
+              "현위치",
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const Icon(
             Icons.person_pin_circle,
             color: Colors.blue,
             size: 40,
           ),
-        ),
-      );
-    }
+        ],
+      ),
+    ),
+  );
+}
 
     return Scaffold(
       appBar: AppBar(title: const Text("맛집 위치")),
