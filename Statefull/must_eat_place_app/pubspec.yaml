@@ -39,7 +39,7 @@ dependencies:
   geocoding: ^3.0.0
 
   # GPS 신호
-  geolocator: ^13.0.4
+  geolocator: ^14.0.0
 
   # 지도
   flutter_map: ^8.1.1

@@ -1,11 +1,39 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:must_eat_place_app/model/eatplace.dart';
 import 'package:must_eat_place_app/view/insert_gps.dart';
 import 'package:must_eat_place_app/vm/database_handler.dart';
+
+/// 전화번호 하이픈 자동 입력 포매터
+class PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+    String newText = digitsOnly;
+    if (digitsOnly.length >= 11) {
+      newText =
+          '${digitsOnly.substring(0, 3)}-${digitsOnly.substring(3, 7)}-${digitsOnly.substring(7, 11)}';
+    } else if (digitsOnly.length >= 8) {
+      newText =
+          '${digitsOnly.substring(0, 3)}-${digitsOnly.substring(3, 6)}-${digitsOnly.substring(6)}';
+    } else if (digitsOnly.length >= 4) {
+      newText = '${digitsOnly.substring(0, 3)}-${digitsOnly.substring(3)}';
+    }
+
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}
 
 class UpdateEatplace extends StatefulWidget {
   const UpdateEatplace({super.key});
@@ -24,6 +52,7 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
   late List<String> categoryList;
   late String category;
   bool favor = false;
+  late int star;
 
   XFile? imageFile;
   final ImagePicker picker = ImagePicker();
@@ -45,8 +74,9 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
     detailController.text = value[3];
     category = value[4];
     favor = value[5];
-    latData = value[7];
-    longData = value[8];
+    star = value[6];
+    latData = value[8];
+    longData = value[9];
 
     firstDisp = 0;
   }
@@ -58,41 +88,62 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () => getImageFromGallery(ImageSource.gallery),
-              child: Text('이미지'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                onPressed: () => getImageFromGallery(ImageSource.gallery),
+                child: Text('이미지'),
+              ),
             ),
             firstDisp == 0
                 ? Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    color: Colors.grey,
-                    child: Center(child: Image.memory(value[6])),
-                  )
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  color: Colors.grey,
+                  child: Center(child: Image.memory(value[7])),
+                )
                 : Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    color: Colors.grey,
-                    child: Center(
-                      child: imageFile == null
-                          ? Text('Image is not selected!')
-                          : Image.file(File(imageFile!.path)),
-                    ),
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  color: Colors.grey,
+                  child: Center(
+                    child:
+                        imageFile == null
+                            ? Text('Image is not selected!')
+                            : Image.file(File(imageFile!.path)),
                   ),
-            ElevatedButton(
-              onPressed: () async {
-                final result = await Get.to(InsertGps());
-                if (result != null) {
-                  setState(() {
+                ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                onPressed: () async {
+                  final result = await Get.to(
+                    InsertGps(),
+                    arguments: {'lat': latData, 'long': longData},
+                  );
+                  if (result != null) {
                     latData = result['lat'];
                     longData = result['long'];
-                  });
-                }
-              },
-              child: Text('위치설정'),
+                    setState(() {});
+                  }
+                },
+                child: Text('위치설정'),
+              ),
             ),
-
-            // 위치
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
@@ -100,17 +151,16 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                 children: [
                   SizedBox(width: 80, child: Text('위치')),
                   Expanded(
-                    child: latData == null || longData == null
-                        ? Text('위치가 선택되지 않았습니다.')
-                        : Text(
-                            '위도  ${latData!.toStringAsFixed(4)}  /  경도  ${longData!.toStringAsFixed(4)}',
-                          ),
+                    child:
+                        latData == null || longData == null
+                            ? Text('위치가 선택되지 않았습니다.')
+                            : Text(
+                              '위도  ${latData!.toStringAsFixed(4)}  /  경도  ${longData!.toStringAsFixed(4)}',
+                            ),
                   ),
                 ],
               ),
             ),
-
-            // 이름
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
@@ -125,8 +175,6 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                 ],
               ),
             ),
-
-            // 전화번호
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
@@ -136,13 +184,13 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                     child: TextField(
                       controller: phoneController,
                       decoration: InputDecoration(labelText: '전화번호를 입력하세요'),
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [PhoneNumberFormatter()],
                     ),
                   ),
                 ],
               ),
             ),
-
-            // 종류
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
@@ -152,12 +200,13 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                     child: DropdownButton<String>(
                       value: category,
                       isExpanded: true,
-                      items: categoryList.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                      items:
+                          categoryList.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                       onChanged: (value) {
                         category = value!;
                         setState(() {});
@@ -167,8 +216,6 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                 ],
               ),
             ),
-
-            // 평가
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
@@ -178,15 +225,37 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                   Expanded(
                     child: TextField(
                       controller: detailController,
-                      maxLines: 2,
                       decoration: InputDecoration(labelText: '평가를 입력하세요'),
                     ),
                   ),
                 ],
               ),
             ),
-
-            // 즐겨찾기
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 80, child: Text('별점')),
+                  Expanded(
+                    child: Row(
+                      children: List.generate(5, (index) {
+                        return IconButton(
+                          icon: Icon(
+                            index < star ? Icons.star : Icons.star_border,
+                            color: Colors.amber,
+                          ),
+                          onPressed: () {
+                            star = index + 1;
+                            setState(() {});
+                          },
+                        );
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
@@ -202,14 +271,30 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
                 ],
               ),
             ),
-
             SizedBox(height: 8),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
               onPressed: () {
                 if (firstDisp == 0) {
-                  updateAction();
+                  if (nameController.text.trim().isEmpty ||
+                      phoneController.text.trim().isEmpty) {
+                    errorSnackBar();
+                  } else {
+                    updateAction();
+                  }
                 } else {
-                  updateActionAll();
+                  if (nameController.text.trim().isEmpty ||
+                      phoneController.text.trim().isEmpty) {
+                    errorSnackBar();
+                  } else {
+                    updateActionAll();
+                  }
                 }
               },
               child: Text('수정'),
@@ -223,13 +308,10 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
 
   Future getImageFromGallery(ImageSource imageSource) async {
     final XFile? pickedFile = await picker.pickImage(source: imageSource);
-    if (pickedFile == null) {
-      return;
-    } else {
-      imageFile = XFile(pickedFile.path);
-      firstDisp += 1;
-      setState(() {});
-    }
+    if (pickedFile == null) return;
+    imageFile = XFile(pickedFile.path);
+    firstDisp += 1;
+    setState(() {});
   }
 
   updateAction() async {
@@ -240,9 +322,10 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
       detail: detailController.text,
       category: category,
       favor: favor,
+      star: star,
       latData: latData!,
       longData: longData!,
-      image: value[6],
+      image: value[7],
     );
 
     int result = await handler.updateEatplace(eatplaceUpdate);
@@ -264,6 +347,7 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
       detail: detailController.text,
       category: category,
       favor: favor,
+      star: star,
       latData: latData!,
       longData: longData!,
       image: getImage,
@@ -280,7 +364,7 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
   errorSnackBar() {
     Get.snackbar(
       "경고",
-      "입력 중 문제가 발생했습니다",
+      "입력 중 문제가 발생했습니다, 항목을 확인하세요.",
       colorText: Theme.of(context).colorScheme.onError,
       backgroundColor: Theme.of(context).colorScheme.error,
     );
@@ -288,8 +372,8 @@ class _UpdateEatplaceState extends State<UpdateEatplace> {
 
   _showDialog() {
     Get.defaultDialog(
-      title: '입력완료',
-      middleText: '입력이 완료되었습니다.',
+      title: '수정완료',
+      middleText: '수정이 완료되었습니다.',
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       barrierDismissible: false,
       actions: [

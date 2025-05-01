@@ -20,25 +20,36 @@ class DatabaseHandler {
       join(path, 'eatplace.db'),
       onCreate: (db, version) async{
         await db.execute(
-        "create table eatplace(id integer primary key autoincrement, name text, phone text, detail text, category text, favor integer, image blob, latData real, longData real)"
+        "create table eatplace(id integer primary key autoincrement, name text, phone text, detail text, category text, favor integer, star int, image blob, latData real, longData real)"
         );
       },
       version: 1,
     );
   }
 
-    Future<List<Eatplace>> queryEatplace() async{
+  Future<List<Eatplace>> queryEatplace() async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery('select * from eatplace order by name'); // 이름별로 정렬해서 넘겨주자
     return queryResults.map((e) => Eatplace.fromMap(e)).toList();
   }
 
+Future<List<Eatplace>> querySearchName(String keyword) async {
+  final Database db = await initializeDB();
+  final List<Map<String, Object?>> queryResults = await db.rawQuery(
+    'SELECT * FROM eatplace WHERE name LIKE ? ORDER BY name',
+    ['%$keyword%'], 
+  );
+  return queryResults.map((e) => Eatplace.fromMap(e)).toList();
+}
+
+
+
   Future<int> insertEatplace(Eatplace eatplace) async{
     int result = 0;
     final Database db = await initializeDB();
     result = await db.rawInsert(
-      'insert into eatplace(name, phone, detail, category, favor, image, latData, longData) values (?,?,?,?,?,?,?,?)',
-      [eatplace.name, eatplace.phone, eatplace.detail, eatplace.category, eatplace.favor, eatplace.image, eatplace.latData, eatplace.longData]
+      'insert into eatplace(name, phone, detail, category, favor, star, image, latData, longData) values (?,?,?,?,?,?,?,?,?)',
+      [eatplace.name, eatplace.phone, eatplace.detail, eatplace.category, eatplace.favor, eatplace.star, eatplace.image, eatplace.latData, eatplace.longData]
     );
     return result;
   }
@@ -46,8 +57,8 @@ class DatabaseHandler {
     Future<int> updateEatplace(Eatplace eatplace) async{
     int result = 0;
     final Database db = await initializeDB();
-    result = await db.rawUpdate('update eatplace set name=?, phone=?, detail=?, category=?, favor=?, latData=?, longData=? where id=?',
-            [eatplace.name, eatplace.phone, eatplace.detail, eatplace.category, eatplace.favor, eatplace.latData, eatplace.longData, eatplace.id]
+    result = await db.rawUpdate('update eatplace set name=?, phone=?, detail=?, category=?, favor=?, star=?, latData=?, longData=? where id=?',
+            [eatplace.name, eatplace.phone, eatplace.detail, eatplace.category, eatplace.favor, eatplace.star, eatplace.latData, eatplace.longData, eatplace.id]
     );
     return result;
     }
@@ -55,8 +66,8 @@ class DatabaseHandler {
     Future<int> updateAllEatplace(Eatplace eatplace) async{
     int result = 0;
     final Database db = await initializeDB();
-    result = await db.rawUpdate('update eatplace set name=?, phone=?, detail=?, category=?, favor=?, image=?, latData=?, longData=? where id=?',
-            [eatplace.name, eatplace.phone, eatplace.detail, eatplace.category, eatplace.favor, eatplace.image, eatplace.latData, eatplace.longData, eatplace.id]
+    result = await db.rawUpdate('update eatplace set name=?, phone=?, detail=?, category=?, favor=?, star=?, image=?, latData=?, longData=? where id=?',
+            [eatplace.name, eatplace.phone, eatplace.detail, eatplace.category, eatplace.favor, eatplace.star, eatplace.image, eatplace.latData, eatplace.longData, eatplace.id]
     );
     return result;
     }

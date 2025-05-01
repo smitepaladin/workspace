@@ -7,6 +7,7 @@ class Eatplace {
   final String detail;
   final String category;
   final bool favor;
+  final int star;
   final Uint8List image;
   final double latData;
   final double longData;
@@ -18,6 +19,7 @@ class Eatplace {
     required this.detail,
     required this.category,
     required this.favor,
+    required this.star,
     required this.image,
     required this.latData,
     required this.longData,
@@ -29,7 +31,8 @@ class Eatplace {
         phone = res['phone'],
         detail = res['detail'],
         category = res['category'],
-        favor = res['favor'] == 1, 
+        favor = res['favor'] == 1,
+        star = res['star'],
         image = res['image'],
         latData = res['latData'],
         longData = res['longData'];
@@ -42,6 +45,7 @@ class Eatplace {
       'detail': detail,
       'category': category,
       'favor': favor ? 1 : 0,
+      'star': star,
       'image': image,
       'latData': latData,
       'longData': longData,

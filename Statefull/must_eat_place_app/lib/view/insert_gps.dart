@@ -16,11 +16,15 @@ class _InsertGpsState extends State<InsertGps> {
   LatLng? currentLocation;
   final MapController mapController = MapController();
 
-  final LatLng defaultLocation = LatLng(37.494444, 127.03); // 초기 기본 위치 (예: 한국빌딩)
+  final LatLng defaultLocation = LatLng(37.494444, 127.03); // 한국빌딩
 
   @override
   void initState() {
     super.initState();
+    final args = Get.arguments;
+    if (args != null && args['lat'] != null && args['long'] != null) {
+      selectedLocation = LatLng(args['lat'], args['long']);
+    }
     _determinePosition(); // 위치 먼저 받아오고 지도 이동
   }
 
@@ -33,7 +37,8 @@ class _InsertGpsState extends State<InsertGps> {
       permission = await Geolocator.requestPermission();
     }
 
-    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
+    if (permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always) {
       Position position = await Geolocator.getCurrentPosition();
       final current = LatLng(position.latitude, position.longitude);
       setState(() {
@@ -60,9 +65,26 @@ class _InsertGpsState extends State<InsertGps> {
       markers.add(
         Marker(
           point: selectedLocation!,
-          width: 40,
-          height: 40,
-          child: Icon(Icons.location_on, color: Colors.red, size: 40),
+          width: 100,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text(
+                  "선택한 위치",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const Icon(Icons.location_on, color: Colors.red, size: 40),
+            ],
+          ),
         ),
       );
     }
@@ -71,9 +93,26 @@ class _InsertGpsState extends State<InsertGps> {
       markers.add(
         Marker(
           point: currentLocation!,
-          width: 40,
-          height: 40,
-          child: Icon(Icons.person_pin_circle, color: Colors.blue, size: 40),
+          width: 100,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text(
+                  "현위치",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const Icon(Icons.person_pin_circle, color: Colors.blue, size: 40),
+            ],
+          ),
         ),
       );
     }
@@ -99,20 +138,21 @@ class _InsertGpsState extends State<InsertGps> {
           MarkerLayer(markers: markers),
         ],
       ),
-      floatingActionButton: selectedLocation == null
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: () {
-                Get.back(result: {
-                  'lat': selectedLocation!.latitude,
-                  'long': selectedLocation!.longitude,
-                });
-              },
-              label: Text('이 위치 선택'),
-              icon: Icon(Icons.check),
-            ),
+      floatingActionButton:
+          selectedLocation == null
+              ? null
+              : FloatingActionButton.extended(
+                onPressed: () {
+                  Get.back(
+                    result: {
+                      'lat': selectedLocation!.latitude,
+                      'long': selectedLocation!.longitude,
+                    },
+                  );
+                },
+                label: Text('이 위치 선택'),
+                icon: Icon(Icons.check),
+              ),
     );
   }
 }
-
-

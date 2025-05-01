@@ -6,6 +6,7 @@ import 'package:must_eat_place_app/view/gps_eatplace.dart';
 import 'package:must_eat_place_app/view/insert_eatplace.dart';
 import 'package:must_eat_place_app/view/update_eatplace.dart';
 import 'package:must_eat_place_app/vm/database_handler.dart';
+import 'package:must_eat_place_app/model/eatplace.dart';
 
 class QueryEatplace extends StatefulWidget {
   const QueryEatplace({super.key});
@@ -16,9 +17,12 @@ class QueryEatplace extends StatefulWidget {
 
 class _QueryEatplaceState extends State<QueryEatplace> {
   // Property
+
   late DatabaseHandler handler;
   XFile? imageFile;
   final ImagePicker picker = ImagePicker();
+  late TextEditingController searchController;
+  List<Eatplace>? searchResults;
 
   // 필터 상태
   bool showFavor = false;
@@ -29,15 +33,21 @@ class _QueryEatplaceState extends State<QueryEatplace> {
   void initState() {
     super.initState();
     handler = DatabaseHandler();
+    searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('맛집'),
+        title: Text('내가 경험한 맛집 리스트'),
         actions: [
-          // 카테고리 드롭다운
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: selectedCategory,
@@ -58,7 +68,6 @@ class _QueryEatplaceState extends State<QueryEatplace> {
               },
             ),
           ),
-          // 즐겨찾기 필터 버튼
           IconButton(
             icon: Icon(
               showFavor ? Icons.star : Icons.star_border,
@@ -71,33 +80,76 @@ class _QueryEatplaceState extends State<QueryEatplace> {
               });
             },
           ),
-
-          // 추가 버튼
           IconButton(
             onPressed:
                 () => Get.to(InsertEatplace())!.then((value) => reloadData()),
             icon: Icon(Icons.add_outlined),
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      hintText: '맛집 이름 검색',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  tooltip: '검색',
+                  onPressed: () async {
+                    String keyword = searchController.text.trim();
+                    if (keyword.isEmpty) {
+                      searchResults = null;
+                      setState(() {});
+                    } else {
+                      final results = await handler.querySearchName(keyword);
+                      searchResults = results;
+                      setState(() {});
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       body: FutureBuilder(
         future: handler.queryEatplace(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            // 원본 데이터: 전체 or 검색 결과
+            List<Eatplace> rawData =
+                (searchResults != null) ? searchResults! : snapshot.data!;
+
             // 필터 적용
-            List filteredData =
-                snapshot.data!
+            List<Eatplace> filteredData =
+                rawData
                     .where(
                       (item) =>
                           (selectedCategory == '전체' ||
                               item.category == selectedCategory) &&
                           (!showFavor || item.favor == true),
-                    ).toList();
+                    )
+                    .toList();
 
             if (filteredData.isEmpty) {
               return Center(
                 child: Text(
-                  '해당 카테고리에 추가한 맛집이 없습니다.',
+                  '해당 조건에 맞는 맛집이 없습니다.',
                   style: TextStyle(fontSize: 16),
                 ),
               );
@@ -137,6 +189,7 @@ class _QueryEatplaceState extends State<QueryEatplace> {
                                 item.detail,
                                 item.category,
                                 item.favor,
+                                item.star,
                                 item.image,
                                 item.latData,
                                 item.longData,
@@ -161,27 +214,31 @@ class _QueryEatplaceState extends State<QueryEatplace> {
                         ),
                       ],
                     ),
-child: Card(
-  color: item.favor ? Colors.yellow : const Color.fromARGB(255, 233, 233, 233),
-  child: Row(
-    children: [
-      Image.memory(
-        item.image,
-        width: 100,
-        height: 100,
-        fit: BoxFit.cover,
-      ),
-      SizedBox(width: 10),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('명칭 : ${item.name}'),
-          Text('전화번호 : ${item.phone}'),
-        ],
-      ),
-    ],
-  ),
-),
+                    child: Card(
+                      color:
+                          item.favor
+                              ? Colors.yellow
+                              : const Color.fromARGB(255, 233, 233, 233),
+                      child: Row(
+                        children: [
+                          Image.memory(
+                            item.image,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('명칭 : ${item.name}'),
+                              Text('전화번호 : ${item.phone}'),
+                              Text('별점 : ${'★' * item.star}${'☆' * (5 - item.star)}'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 );
               },
