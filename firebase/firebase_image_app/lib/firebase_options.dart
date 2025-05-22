@@ -53,12 +53,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDLSV34yMtIaJajESBVZMuddrBCABOLeJ8',
-    appId: '1:804645677677:ios:ce7d8653773af52c386d64',
-    messagingSenderId: '804645677677',
-    projectId: 'students-89516',
-    storageBucket: 'students-89516.firebasestorage.app',
+    apiKey: 'AIzaSyAzeqga-5tLRjJqiEE5RL-TuWMTD7WxZm4',
+    appId: '1:684978286962:ios:d4787efe017cf83652edeb',
+    messagingSenderId: '684978286962',
+    projectId: 'students-77b34',
+    storageBucket: 'students-77b34.firebasestorage.app',
     iosBundleId: 'com.example.firebaseImageApp',
   );
-
 }

@@ -47,6 +47,9 @@ dependencies:
 
   # GetX
   get: ^4.7.2
+
+  # Slidable
+  flutter_slidable: ^4.0.0
   
 dev_dependencies:
   flutter_test:

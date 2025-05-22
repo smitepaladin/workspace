@@ -145,22 +145,25 @@ class _HomeState extends State<Home> {
   _updateDialog(index){
     worklistController.text = todoListBox.getAt(index).work;
     Get.defaultDialog(
-      title: "Todo List",
-      content: Column(
-        children: [
-          TextField(
-            controller: worklistController,
-            decoration: InputDecoration(labelText: "수정할 내용"),
-          ),
-          TextButton(
-            onPressed: () => _updateAction(index), 
-            child: Text('수정하기'),
-          ),
-        ],
+      title: 'Todo List',
+      content: TextField(
+        controller: worklistController,
+        decoration: InputDecoration(
+          labelText: '수정할 내용'
+        ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      barrierDismissible: false,
+      actions: [
+        TextButton(
+          onPressed: () {
+            _updateAction(index);
+          }, 
+          child: Text('추가하기'),
+        ),
+      ]
     );
   }
-
 
   _updateAction(index) {
     TodoList todolist = TodoList(
