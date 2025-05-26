@@ -2,7 +2,6 @@ import 'package:bmi_image_app/vm/cacl_bmi_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import 'view/home.dart';
 
 void main() {
@@ -13,8 +12,9 @@ void main() {
           create: (context) => CaclBmiModel(),
           )
       ],
-      child: const MyApp())
-      );
+      child: const MyApp(),
+      )
+    );
 }
 
 class MyApp extends StatelessWidget {

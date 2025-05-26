@@ -8,7 +8,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Property
     final movieProvider = context.watch<MovieModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Provider JSON app'),

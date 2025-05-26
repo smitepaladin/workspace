@@ -157,7 +157,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                 .ref()
                                 .child('images')
                                 .child('${nameController.text}.png');
-    await firebaseStorage.putFile(imgFile!);
+    // await firebaseStorage.putFile(imgFile!);
+    final bytes = await imageFile!.readAsBytes();
+    await firebaseStorage.putData(bytes);
     String downloadURL = await firebaseStorage.getDownloadURL();
     return downloadURL;
   }
