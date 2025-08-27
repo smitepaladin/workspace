@@ -86,11 +86,12 @@
 				};
 			};
 			buildConfigurationList = BFA041B92E41D27B0048B44A /* Build configuration list for PBXProject "DatePiker" */;
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = BFA041B52E41D27B0048B44A;
 			minimizedProjectReferenceProxies = 1;

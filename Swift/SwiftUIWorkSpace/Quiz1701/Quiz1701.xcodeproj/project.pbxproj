@@ -86,11 +86,12 @@
 				};
 			};
 			buildConfigurationList = BFA044362E43377A0048B44A /* Build configuration list for PBXProject "Quiz1701" */;
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = BFA044322E43377A0048B44A;
 			minimizedProjectReferenceProxies = 1;

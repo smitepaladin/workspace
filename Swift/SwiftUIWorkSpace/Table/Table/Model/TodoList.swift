@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct TodoList: Identifiable {
+    var id = UUID() // Unique Identifier
+    var items: String
+    var itemsImageFile: String
+}

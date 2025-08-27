@@ -86,11 +86,12 @@
 				};
 			};
 			buildConfigurationList = BFA0441A2E4332520048B44A /* Build configuration list for PBXProject "SimpleTodoList" */;
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = BFA044162E4332520048B44A;
 			minimizedProjectReferenceProxies = 1;

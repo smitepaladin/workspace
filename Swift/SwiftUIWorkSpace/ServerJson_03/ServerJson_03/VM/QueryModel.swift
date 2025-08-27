@@ -1,6 +1,6 @@
 //
 //  QueryModel.swift
-//  ServerJson_01
+//  ServerJson_03
 //
 //  Created by Jun Jong Eck on 8/7/25.
 //

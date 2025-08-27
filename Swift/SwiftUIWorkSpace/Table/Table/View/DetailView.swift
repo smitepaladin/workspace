@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct DetailView: View {
+    var todolist: TodoList
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(content: {
+            Image(todolist.itemsImageFile)
+                .resizable()
+                .frame(width: 100, height: 100)
+                .fixedSize()
+                .padding(.bottom, 10)
+                .scaledToFit()
+            
+            Text(todolist.items)
+        })
+        .navigationTitle("Detail View")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    DetailView()
+    DetailView(todolist: TodoList(items: "aaa", itemsImageFile: "cart"))
 }
